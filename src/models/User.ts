@@ -1,4 +1,5 @@
-import {Entity, PrimaryGeneratedColumn,Column} from "typeorm";
+import {Entity, PrimaryGeneratedColumn,Column, ManyToOne} from "typeorm";
+import { Rol } from "./Rol";
 
 
 @Entity()
@@ -13,8 +14,17 @@ export class User{
     @Column()
     age: number
 
+    @ManyToOne(()=>Rol, (rol)=> rol.user)
+    rol: Rol
+
     @Column({default:true})
     state: boolean
+
+    @Column()
+    Email: string
+
+    @Column()
+    Password: string
 
 
 }

@@ -8,15 +8,18 @@ const UserRepository = AppDataSource.getRepository(User);
 // crear un registro
 class UserController {
 
-    static createUser =async (req:Request, res:Response) => {
+    static createUser = async (req:Request, res:Response) => {
 
-        const {Name,age} = req.body
+        const {Name, age, Email, Password, rolId} = req.body
 
         try {
 
             const user = new User()
             user.Name = Name
             user.age = age
+            user.Email = Email
+            user.Password = Password
+            user.rol = rolId 
 
             await UserRepository.save(user)
             return res.json({
@@ -36,6 +39,10 @@ class UserController {
     static getUsers = async (req:Request, res:Response) =>{
         try {
             const user = await UserRepository.find({
+                relations: {
+                    rol: true
+                },
+
                 where: {state: true},
             });
 
@@ -78,7 +85,7 @@ class UserController {
     static updateUser = async (req:Request, res:Response) =>{
         const id = parseInt(req.params.id);
 
-        const { Name, age} = req.body;
+        const { Name, age, Email, Password, rolId} = req.body;
         const repoUser = AppDataSource.getRepository(User);
         let user: User;
         try {
@@ -95,6 +102,10 @@ class UserController {
 
             user.Name = Name
             user.age = age
+            user.Email = Email
+            user.Password = Password
+            user.rol = rolId
+            
             await repoUser.save(user);
             return res.json({
                 ok: true,
