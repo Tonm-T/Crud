@@ -1,5 +1,7 @@
 import { Router } from "express";
 import UserController from "../controllers/user.controller";
+import { checkAuth } from "../verifytoken/verify";
+const {verifytoken} = require('../models/auth')
 
 
 const routes = Router()
@@ -7,11 +9,13 @@ const user = UserController
 
 routes.post("/", user.createUser)
 
-routes.get("/", user.getUsers)
+routes.get("/", checkAuth, user.getUsers)
 
 routes.put("/:id", user.updateUser)
 
 routes.get("/:id", user.getById)
+
+routes.post('/login', user.login )
 
 routes.delete("/:id",user.delteUser)
 

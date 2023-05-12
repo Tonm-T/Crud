@@ -1,7 +1,6 @@
 //importaciones
 import dotenv from "dotenv"
 import { Router } from "express";
-import { env } from "process";
 
 //importacion de nuestras rutas de la clase
 import routesUser from './user.router'

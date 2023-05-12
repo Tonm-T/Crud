@@ -1,9 +1,12 @@
 import { Request, Response } from "express";
 import { AppDataSource } from "../data-source";
 import { User } from "../models/User";
-import { ok } from "assert";
+const {tokenSign} = require('../models/auth')
+import bcrypt from "bcrypt"
+
 
 const UserRepository = AppDataSource.getRepository(User);
+const saltRounds = 10;
 
 // crear un registro
 class UserController {
@@ -11,6 +14,7 @@ class UserController {
     static createUser = async (req:Request, res:Response) => {
 
         const {Name, age, Email, Password, rolId} = req.body
+        const hashedPassword = bcrypt.hashSync(Password, saltRounds);
 
         try {
 
@@ -18,7 +22,7 @@ class UserController {
             user.Name = Name
             user.age = age
             user.Email = Email
-            user.Password = Password
+            user.Password = hashedPassword
             user.rol = rolId 
 
             await UserRepository.save(user)
@@ -149,6 +153,41 @@ class UserController {
             }) ;
         }
     }
+
+    static login = async (req: Request, res: Response) => {
+        const { Email, Password } = req.body;
+      
+        // Buscar usuario por correo electrónico
+        const user = await UserRepository.findOne({ where: { Email } });
+      
+        if (!user) {
+          return res.status(401).json({ msg: "Password or Email incorrect" });
+        }
+      
+        // Verificar si la contraseña es correcta
+        const isPasswordCorrect = bcrypt.compareSync(Password, user.Password);
+
+        //Generar Token
+        const tokenSession = await tokenSign(user)
+
+        if (isPasswordCorrect) {
+            res.send({
+                data: user,
+                tokenSession
+            })
+        }
+      
+        if (!isPasswordCorrect) {
+          return res.status(401).json({ msg: "Password or Email incorrect" });
+        }
+      
+        // Si las credenciales son válidas, retornar un mensaje de éxito
+        return res.json({
+          ok: true,
+          msg: "Welcome",
+        });
+    };
+
 }
 
 

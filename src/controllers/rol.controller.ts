@@ -1,8 +1,6 @@
 import { Request,Response } from "express";
 import { AppDataSource } from "../data-source";
 import {Rol} from "../models/Rol"
-import { ok } from "assert";
-import { create } from "domain";
 import { User } from "../models/User";
 
 const RolRepository = AppDataSource.getRepository(Rol);

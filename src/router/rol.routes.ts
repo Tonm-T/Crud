@@ -1,12 +1,15 @@
 import { Router } from "express";
 import RolController from "../controllers/rol.controller";
+import { checkAuth } from "../verifytoken/verify";
+
 
 const routes = Router()
+
 const rol = RolController
 
 routes.post("/", rol.createRol)
 
-routes.get("/", rol.getRol)
+routes.get("/", checkAuth ,  rol.getRol)
 
 routes.get("/id", rol.getById)
 
