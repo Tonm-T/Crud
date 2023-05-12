@@ -1,7 +1,7 @@
 import {Entity, PrimaryGeneratedColumn,Column, ManyToOne} from "typeorm";
 import { Rol } from "./Rol";
 
-
+//Creacion de Nuestar Entidad User: Usuario
 @Entity()
 export class User{
 

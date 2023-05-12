@@ -3,7 +3,7 @@ import {verifytoken} from "../models/auth"
 
 import { Request, Response, NextFunction } from "express"
 
-
+//Metodo de Verificacion de token
 export const checkAuth = async (req: Request, res: Response, next: NextFunction) => {
     try {
         console.log(req.headers.authorization)

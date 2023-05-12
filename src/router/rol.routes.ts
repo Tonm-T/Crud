@@ -2,7 +2,7 @@ import { Router } from "express";
 import RolController from "../controllers/rol.controller";
 import { checkAuth } from "../verifytoken/verify";
 
-
+//Rutas de rol
 const routes = Router()
 
 const rol = RolController

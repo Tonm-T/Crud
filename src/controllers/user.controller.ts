@@ -176,7 +176,8 @@ class UserController {
                 tokenSession
             })
         }
-      
+
+        //Validacion del Password
         if (!isPasswordCorrect) {
           return res.status(401).json({ msg: "Password or Email incorrect" });
         }

@@ -1,6 +1,8 @@
 import { Entity, PrimaryGeneratedColumn, Column, OneToMany,  } from "typeorm";
 import { User } from "./User";
 
+
+//Creacion de nuestra  entidad Rol
 @Entity()
 export class Rol{
     @PrimaryGeneratedColumn()
