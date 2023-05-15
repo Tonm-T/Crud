@@ -5,6 +5,7 @@ const {tokenSign} = require('../models/auth')
 import bcrypt from "bcrypt"
 
 
+
 const UserRepository = AppDataSource.getRepository(User);
 const saltRounds = 10;
 
@@ -15,6 +16,14 @@ class UserController {
 
         const {Name, age, Email, Password, rolId} = req.body
         const hashedPassword = bcrypt.hashSync(Password, saltRounds);
+
+        const userExist = await UserRepository.findOne({ where: {Email}})
+        if (userExist) {
+            return res.json({
+                ok: false,
+                msg: `Email => ${Email} alredy exist`
+            });
+        }
 
         try {
 
