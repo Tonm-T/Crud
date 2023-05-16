@@ -2,6 +2,7 @@ import { Request, Response, NextFunction } from "express";
 import { check } from "express-validator";
 import validateResult from "../helpers/validate.helpers";
 
+//validacion de campos de roles
 export const rolValidate = [
 
     check('Type')
