@@ -15,6 +15,7 @@ class UserController {
     static createUser = async (req:Request, res:Response) => {
 
         const {Name, age, Email, Password, rolId} = req.body
+        
         const hashedPassword = bcrypt.hashSync(Password, saltRounds);
 
         const userExist = await UserRepository.findOne({ where: {Email}})
